@@ -1,0 +1,95 @@
+<!-- article_detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ article.title }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        body {
+            background-color: #ffe6f0;
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #ff66b3;
+            font-size: 26px;
+        }
+        .article-detail {
+            max-width: 800px;
+            margin: 30px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .article-detail h2 {
+            color: #333;
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+        .article-detail p {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555;
+        }
+        .article-detail .meta-info {
+            color: #888;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #ff66b3;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .back-link:hover {
+            color: #ff3385;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>{{ article.title }}</h1>
+</header>
+
+<div class="article-detail">
+    <h2>{{ article.title }}</h2>
+    <p class="meta-info">By {{ article.author }} | {{ article.created_at|date:"F d, Y" }}</p>
+    <p>{{ article.content }}</p>
+
+    <a href="{% url 'education:index' %}" class="back-link">← Back to Articles</a>
+    <div>
+
+        <a href="{% url 'conversation:new' article.id %}" class="back-link">Contact writer -></a>
+        
+    </div>
+</div>
+
+
+</body>
+</html>

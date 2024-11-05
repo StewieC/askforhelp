@@ -1,0 +1,483 @@
+<!-- articles.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{%block title%}{%endblock%} | Ask4Help</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+
+
+
+        body {
+            background-color: #ffe6f0;
+            font-family: 'Nunito', sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #ff66b3;
+        }
+        .article-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 20px;
+        }
+        .article-card {
+            background-color: #fff;
+            width: 300px;
+            border-radius: 10px;
+            margin: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+        .article-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+        }
+        .article-card h2 {
+            font-size: 22px;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .article-card p {
+            font-size: 14px;
+            color: #666;
+        }
+        .read-more {
+            display: inline-block;
+            margin-top: 15px;
+            color: #ff66b3;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .read-more:hover {
+            color: #ff3385;
+        }
+        .navbar {
+            background-color: #ffe6f0; /* Light pink background */
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .navbar .brand {
+            font-size: 24px;
+            font-weight: 500;
+            color: #ff66b3; /* Pink text color */
+            text-decoration: none;
+        }
+        .navbar .nav-buttons {
+            display: flex;
+            gap: 15px;
+        }
+        .nav-buttons .btn {
+            background-color: #fff; /* White background */
+            color: #333; /* Black text */
+            padding: 10px 20px;
+            border: 2px solid #ff66b3; /* Pink border */
+            border-radius: 25px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .nav-buttons .btn:hover {
+            background-color: #ff66b3; /* Pink background on hover */
+            color: #fff; /* White text on hover */
+        }
+                /* Footer Styles */
+        .footer {
+            background-color: #ffe6e6; /* Light pink to match the theme */
+            padding: 10px 20px; /* Smaller padding */
+            text-align: center;
+            font-size: 0.85em; /* Slightly smaller font size */
+            color: #333;
+            border-top: 1px solid #ddd;
+            position: relative;
+            box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .footer-row {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .footer-col {
+            flex: 1;
+            margin: 10px;
+        }
+
+        .footer-title {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .footer-desc {
+            margin-bottom: 20px;
+        }
+
+        .footer-heading {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: black;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: black;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #ff66a3;  /* Darker pink on hover */
+            text-decoration: underline;
+        }
+
+        .social-icons {
+            margin-top: 10px;
+        }
+
+        .social-link {
+            display: inline-block;
+            color: black;
+            font-size: 20px;
+            margin-right: 15px;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .social-link:hover {
+            transform: scale(1.2); /* Zoom-in animation */
+            color: #ff66a3;  /* Darker pink on hover */
+        }
+
+        .footer-bottom {
+            text-align: center;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px solid #ff99cc;
+        }
+
+        .footer-bottom p {
+            margin: 0;
+            font-size: 14px;
+            color: black;
+        }
+
+        /* Animation for smooth hover */
+        .footer-links a:hover,
+        .social-link:hover {
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Footer top shadow effect */
+        .footer::before {
+            content: '';
+            display: block;
+            position: absolute;
+            top: -20px;
+            left: 0;
+            right: 0;
+            height: 20px;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.15), rgba(255, 255, 255, 0));
+            z-index: -1;
+        }
+
+                /* Search bar container styling */
+        .search-bar-form {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px auto;
+            width: 80%;
+            max-width: 500px;
+        }
+
+        /* Styling for the search input */
+        .search-input {
+            flex: 1;
+            padding: 10px 15px;
+            border: 2px solid #ffcccc; /* Light pink border */
+            border-radius: 25px 0 0 25px;
+            outline: none;
+            font-size: 1em;
+            background-color: #fff; /* White background */
+            color: #333; /* Black text */
+            transition: all 0.3s ease-in-out;
+        }
+
+                /* Chat Button Styling */
+                .chat-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #ff66b3; /* Pink color */
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .chat-button:hover {
+            background-color: #ff3385; /* Darker pink on hover */
+            transform: scale(1.1); /* Slight zoom effect */
+        }
+
+        /* Chat Popup Styling */
+        .chat-popup {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 300px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            display: none; /* Hidden by default */
+            flex-direction: column;
+            z-index: 1000;
+            animation: fadeIn 0.3s ease; /* Animation for popup */
+        }
+
+        /* Chat Header */
+        .chat-header {
+            background-color: #ff66b3; /* Pink background */
+            color: white;
+            padding: 10px;
+            border-radius: 10px 10px 0 0;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        /* Chat Messages */
+        .chat-messages {
+            padding: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        /* Individual Chat Message */
+        .chat-message {
+            margin: 5px 0;
+            padding: 5px;
+            border-radius: 5px;
+            background-color: #f1f1f1;
+        }
+
+        /* User's Message */
+        .chat-message.user {
+            background-color: #ff66b3; /* Pink background for user's messages */
+            color: white;
+            text-align: right;
+        }
+
+        /* Input Area for New Messages */
+        .chat-input-area {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+
+        .chat-input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 0 0 0 10px;
+            outline: none;
+            font-size: 14px;
+        }
+
+        .send-button {
+            background-color: #ff66b3; /* Pink color */
+            border: none;
+            border-radius: 0 0 10px 0;
+            padding: 10px 15px;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .send-button:hover {
+            background-color: #ff3385; /* Darker pink on hover */
+        }
+
+        /* Fade-in animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+       
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <!-- App Name on the left -->
+        <a href="/" class="brand">Ask4Help</a>
+
+        <!-- Two buttons on the right -->
+        <div class="nav-buttons">
+            {% if request.user.is_authenticated %}
+            <a href="{% url 'education:new' %}" class="btn">New Article</a>
+            <a href="{% url 'contacts:emergency_contacts' %}" class="btn">Emergency Contacts</a>
+            <a href="{% url 'education:faq' %}" class="btn">FAQs</a>
+            {% else %}
+            <a href="{% url 'education:login' %}" class="btn">Login</a>
+            <a href="{% url 'education:signup' %}" class="btn">Sign Up</a>
+            <a href="{% url 'education:faq' %}" class="btn">FAQs</a>
+            {% endif %}
+        </div>
+        
+    </div>
+    
+<div>
+
+
+{%block content%}
+    
+{%endblock%}
+</div>
+<div>
+    <!-- Chat Button -->
+    <button class="chat-button" onclick="toggleChat()">💬</button>
+
+    <!-- Chat Popup -->
+    <div class="chat-popup" id="chat-popup">
+        <div class="chat-header">Chat with Us</div>
+        <div class="chat-messages" id="chat-messages">
+            <!-- Chat messages will be dynamically inserted here -->
+        </div>
+        <div class="chat-input-area">
+            <input type="text" class="chat-input" id="chat-input" placeholder="Type your message...">
+            <button class="send-button" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+</div>
+
+<!-- Footer Section -->
+<footer class="footer">
+    <div class="footer-container">
+        <div class="footer-row">
+            <!-- App Name and Description -->
+            <div class="footer-col">
+                <h3 class="footer-title">Ask4Help</h3>
+                <p class="footer-desc">Your go-to resource for first aid and emergency contact info, available when you need it the most.</p>
+            </div>
+            
+            <!-- Quick Links -->
+            <div class="footer-col">
+                <h4 class="footer-heading">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="{% url 'education:index' %}">Home</a></li>
+                    <li><a href="{% url 'education:new' %}">Post an Article</a></li>
+                    <li><a href="{% url 'contacts:emergency_contacts' %}">Emergency Contacts</a>
+                    <li><a href="{% url 'education:login' %}">Login</a></li>
+                    <li><a href="{% url 'education:signup' %}">Sign Up</a></li>
+                    <li><a href="{% url 'conversation:inbox' %}">inbox</a></li>
+
+
+                </ul>
+            </div>
+
+            <!-- Contact Information -->
+            <div class="footer-col">
+                <h4 class="footer-heading">Contact Us</h4>
+                <ul class="footer-links">
+                    <li>Email: support@ask4help.com</li>
+                    <li>Phone: +123 456 7890</li>
+                    <li>Location: 123 Health St., Nyeri</li>
+                </ul>
+            </div>
+
+            <!-- Social Media Links -->
+            <div class="footer-col">
+                <h4 class="footer-heading">Follow Us</h4>
+                <div class="social-icons">
+                    <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>&copy; 2024 Ask4Help. All Rights Reserved.</p>
+    </div>
+
+</footer>
+
+
+<script>
+    function toggleChat() {
+        const chatPopup = document.getElementById('chat-popup');
+        chatPopup.style.display = chatPopup.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    function sendMessage() {
+        const inputField = document.getElementById('chat-input');
+        const message = inputField.value;
+
+        if (message) {
+            const messageContainer = document.getElementById('chat-messages');
+            const userMessage = document.createElement('div');
+            userMessage.className = 'chat-message user';
+            userMessage.textContent = message;
+            messageContainer.appendChild(userMessage);
+            inputField.value = '';
+
+            // Simulate AI response
+            setTimeout(() => {
+                const aiMessage = document.createElement('div');
+                aiMessage.className = 'chat-message';
+                aiMessage.textContent = 'AI Response: ' + message; // Placeholder for actual AI response
+                messageContainer.appendChild(aiMessage);
+                messageContainer.scrollTop = messageContainer.scrollHeight; // Scroll to bottom
+            }, 1000);
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+{% extends 'education/base.html' %}
+
+
+
+{% block title %} Welcome {% endblock %}
+
+{% block content %}
+<style>
+     /* Styling for the search button */
+     .search-button {
+            padding: 10px 20px;
+            border: 2px solid #ffcccc; /* Light pink border */
+            background-color: #ffcccc; /* Light pink background */
+            color: #333; /* Black text */
+            border-radius: 0 25px 25px 0;
+            cursor: pointer;
+            font-size: 1em;
+            transition: all 0.3s ease-in-out;
+        }
+
+        /* Hover effect for the search input */
+        .search-input:focus {
+            border-color: #ff6666; /* Darker pink border on focus */
+            background-color: #ffe6e6; /* Light pink background on focus */
+        }
+
+        /* Hover effect for the search button */
+        .search-button:hover {
+            background-color: #ff6666; /* Darker pink background */
+            color: #fff; /* White text */
+        }
+
+        /* Adding a shadow effect for the search bar */
+        .search-bar-form {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 25px;
+        }
+
+
+</style>
+<div>
+    <!-- Other navigation items -->
+    <form method="GET" action="{% url 'education:search' %}" class="search-bar-form">
+        <input type="text" name="query" placeholder="Search articles..." class="search-input">
+        <button type="submit" class="search-button">Search</button>
+    </form>
+</div>
+<div class="article-container">
+    {% for article in articles %}
+    <div class="article-card">
+        <h2>{{ article.title }}</h2>
+        <p>By {{ article.author }} | {{ article.created_at|date:"F d, Y" }}</p>
+        <p>{{ article.content|truncatewords:20 }}</p>
+        <a href="{% url 'education:article_detail' article.id %}" class="read-more">Read More</a>
+    </div>
+    {% endfor %}
+</div>
+{%endblock%}

@@ -1,0 +1,136 @@
+{% extends 'education/base.html' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+<style>
+    /* Form Container Styles */
+    .form-container {
+        background-color: #ffe6f2; /* Light pink */
+        padding: 30px;
+        border-radius: 10px;
+        width: 60%;
+        margin: 30px auto;
+        box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    /* Title Styling */
+    .form-title {
+        font-size: 24px;
+        color: #ff66a3; /* Darker pink */
+        text-align: center;
+        margin-bottom: 20px;
+        font-weight: bold;
+    }
+
+    /* Form Field Styling */
+    .styled-form .form-fields {
+        margin-bottom: 20px;
+    }
+
+    /* Error Messages Styling */
+    .error-messages {
+        color: red;
+        font-size: 14px;
+        margin-top: 10px;
+    }
+
+    /* Submit Button Styling */
+    .submit-btn {
+        background-color: #ff66a3; /* Darker pink */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: block;
+        margin: 0 auto;
+    }
+
+    /* Button Hover Effect */
+    .submit-btn:hover {
+        background-color: #ff99cc; /* Slightly lighter pink */
+        transform: scale(1.05);
+    }
+
+    /* Animation for Fade In */
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+        /* Input and Text Area Styling */
+    .styled-form input[type="text"],
+    .styled-form textarea {
+        width: 100%;
+        padding: 12px 15px;
+        margin-bottom: 15px;
+        border: 2px solid #ff99cc; /* Light pink border */
+        border-radius: 5px;
+        background-color: #fff0f5; /* Very light pink background */
+        font-size: 16px;
+        color: #333;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Focus Effects */
+    .styled-form input[type="text"]:focus,
+    .styled-form textarea:focus {
+        border-color: #ff66a3; /* Darker pink when focused */
+        box-shadow: 0 0 8px rgba(255, 102, 163, 0.5);
+        outline: none;
+    }
+
+    /* Text Area Specific Styles */
+    .styled-form textarea {
+        resize: vertical;
+        min-height: 150px;
+    }
+
+    /* Placeholder Styling */
+    .styled-form input::placeholder,
+    .styled-form textarea::placeholder {
+        color: #ff99cc;
+        font-style: italic;
+    }
+
+    /* Smooth Animation for Transitions */
+    .styled-form input,
+    .styled-form textarea {
+        transition: all 0.3s ease-in-out;
+    }
+
+
+</style>
+<div class="form-container">
+    <h1 class="form-title">{{ title }}</h1>
+    <form method="post" action="." enctype="multipart/form-data" class="styled-form">
+        {% csrf_token %}
+        
+        <div class="form-fields">
+            {{ form.as_p }}
+        </div>
+
+        {% if form.errors or form.non_field_errors %}
+            <div class="error-messages">
+                {% for field in form %}
+                    {{ field.errors }}
+                {% endfor %}
+
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <button type="submit" class="submit-btn">Submit</button>
+    </form>
+</div>
+{% endblock %}
