@@ -96,7 +96,7 @@ DATABASES = {
     }
 }
 
-DATABASE_URL = postgresql://ask4help_django_render_user:BkUI3H8wmuOY1WUKuQhq8VdDzLYJKwp0@dpg-csl13p56l47c73brag20-a/ask4help_django_render
+# DATABASE_URL = postgresqlel://ask4hp_django_render_user:BkUI3H8wmuOY1WUKuQhq8VdDzLYJKwp0@dpg-csl13p56l47c73brag20-a/ask4help_django_render
 database_url = os.environ.get("DATABASE_URL")
 DATABASES["default"] = dj_database_url.parse("database_url")
 
