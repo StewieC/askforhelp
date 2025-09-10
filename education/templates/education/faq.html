@@ -3,43 +3,7 @@
 {% block title %}{{ title }}{% endblock %}
 
 {% block content %}
-
-<style>
-    /* FAQ Section Styling */
-    .faq-section {
-        margin: 20px auto;
-        padding: 20px;
-        background-color: #fff0f5; /* Very light pink background */
-        border-radius: 10px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    }
-
-    .faq-item {
-        margin-bottom: 15px;
-    }
-
-    .faq-item h3 {
-        font-size: 20px;
-        color: #ff66a3; /* Darker pink for question */
-        cursor: pointer;
-        margin-bottom: 5px;
-    }
-
-    .faq-item p {
-        font-size: 16px;
-        color: #333;
-        display: none; /* Hide answers initially */
-        transition: all 0.3s ease;
-    }
-
-    /* Animation for expanding answer */
-    .faq-item h3:hover + p {
-        display: block;
-    }
-
-</style>
 <h1>Frequently Asked Questions</h1>
-
 <div class="faq-section">
     <div class="faq-item">
         <h3>What is the purpose of this app?</h3>

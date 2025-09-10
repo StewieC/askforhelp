@@ -3,153 +3,25 @@
 {% block title %}Emergency Contacts{% endblock %}
 
 {% block content %}
-
-<style>
-    /* Custom styles for emergency contacts */
-    body {
-        background-color: #fdf5f7; /* Light pink background */
-    }
-
-    .container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 20px;
-        padding: 20px;
-    }
-
-    .card {
-        background-color: white;
-        border-radius: 15px;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        width: 300px;
-        padding: 20px;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
-    }
-
-    .card:before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100%;
-        width: 100%;
-        background: linear-gradient(135deg, rgba(255, 182, 193, 0.2), rgba(255, 182, 193, 0.2));
-        z-index: -1;
-        transition: opacity 0.3s ease;
-        opacity: 0;
-    }
-
-    .card:hover:before {
-        opacity: 1;
-    }
-
-    .card h2 {
-        margin: 0 0 10px;
-        font-size: 1.5rem;
-        color: #ff6685; /* Light pink text for name */
-    }
-
-    .card p {
-        margin: 0;
-        font-size: 1rem;
-        color: black;
-    }
-
-    .card p.location {
-        font-size: 0.9rem;
-        color: gray;
-    }
-
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(10px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .card {
-        animation: fadeInUp 0.5s ease-in-out;
-    }
-        .search-bar {
-        width: 100%;
-        max-width: 400px;
-        margin: 20px auto;
-        position: relative;
-    }
-
-    .search-bar input[type="text"] {
-        width: 100%;
-        padding: 12px 20px;
-        border: 2px solid #ffcccb; /* Light pink border color */
-        border-radius: 30px;
-        background-color: #fff;
-        color: #000; /* Black text color */
-        font-size: 16px;
-        transition: all 0.3s ease;
-        outline: none;
-    }
-
-    .search-bar input[type="text"]:focus {
-        border-color: #ff99aa; /* Darker pink when focused */
-        box-shadow: 0 0 10px rgba(255, 153, 170, 0.6);
-    }
-
-    .search-bar button {
-        position: absolute;
-        right: 10px;
-        top: 50%;
-        transform: translateY(-50%);
-        background-color: #ffcccb;
-        border: none;
-        padding: 10px 15px;
-        border-radius: 20px;
-        cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .search-bar button:hover {
-        background-color: #ff99aa;
-        box-shadow: 0 4px 8px rgba(255, 153, 170, 0.4);
-    }
-
-</style>
-
-
 <div class="search-bar">
     <form method="get" action="{% url 'contacts:search_contacts' %}">
         <input type="text" name="location" placeholder="Search by location">
         <button type="submit">Search</button>
     </form>
 </div>
-
-
 <h1>Emergency Contacts {% if location %} in {{ location }} {% else %} (All Locations) {% endif %}</h1>
-
-<div class="container">
+<div class="contacts-container">
     {% for contact in contacts %}
-    <div class="card">
-        <h2>{{ contact.name }}</h2>
-        <p>Phone: {{ contact.phone_number }}</p>
-        <p class="location">Location: {{ contact.location }}</p>
-    </div>
+        <div class="contact-card">
+            <h2>{{ contact.name }}</h2>
+            <p>Phone: {{ contact.phone_number }}</p>
+            <p class="location">Location: {{ contact.location }}</p>
+        </div>
     {% empty %}
-    <div class="card">
-        <h2>No Emergency Contacts Available</h2>
-        <p>No contacts are available for this location.</p>
-    </div>
+        <div class="contact-card">
+            <h2>No Emergency Contacts Available</h2>
+            <p>No contacts are available for this location.</p>
+        </div>
     {% endfor %}
 </div>
-
 {% endblock %}

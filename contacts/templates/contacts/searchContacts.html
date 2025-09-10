@@ -1,43 +1,20 @@
-{% extends 'education:base.html' %}
+{% extends 'education/base.html' %}
 
 {% block title %}Search Emergency Contacts{% endblock %}
 
 {% block content %}
-
-<style>
-    .contacts-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-    }
-
-    .contact-card {
-        background-color: #f8f8f8;
-        padding: 15px;
-        border-radius: 8px;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        transition: transform 0.2s;
-    }
-
-    .contact-card:hover {
-        transform: translateY(-5px);
-    }
-
-</style>
-    <h1>Emergency Contacts {% if query %} in "{{ query }}" {% else %}(All Locations){% endif %}</h1>
-
-    {% if contacts %}
-        <div class="contacts-list">
-            {% for contact in contacts %}
-                <div class="contact-card">
-                    <h3>{{ contact.name }}</h3>
-                    <p>{{ contact.phone_number }}</p>
-                    <p>Location: {{ contact.location }}</p>
-                </div>
-            {% endfor %}
-        </div>
-    {% else %}
-        <p>No contacts found for the specified location.</p>
-    {% endif %}
+<h1>Emergency Contacts {% if query %} in "{{ query }}" {% else %}(All Locations){% endif %}</h1>
+{% if contacts %}
+    <div class="contacts-container">
+        {% for contact in contacts %}
+            <div class="contact-card">
+                <h3>{{ contact.name }}</h3>
+                <p>{{ contact.phone_number }}</p>
+                <p>Location: {{ contact.location }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No contacts found for the specified location.</p>
+{% endif %}
 {% endblock %}

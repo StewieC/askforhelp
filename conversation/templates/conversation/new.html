@@ -3,101 +3,20 @@
 {% block title %}New Conversation{% endblock %}
 
 {% block content %}
-<style>
-    .new-conversation-form {
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 1.5rem;
-    background-color: #fff; /* White background for contrast */
-    border-radius: 15px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
-}
-
-.new-conversation-form:hover {
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-}
-
-.new-conversation-fields .form-group {
-    margin-bottom: 1rem;
-}
-
-.new-conversation-fields label {
-    font-weight: 600;
-    color: #333;
-}
-
-.new-conversation-fields input[type="text"],
-.new-conversation-fields textarea,
-.new-conversation-fields select {
-    width: 100%;
-    padding: 0.75rem;
-    border-radius: 10px;
-    border: 1px solid #ddd;
-    background-color: #f9f9f9;
-    transition: border-color 0.3s ease, background-color 0.3s ease;
-}
-
-.new-conversation-fields input[type="text"]:focus,
-.new-conversation-fields textarea:focus,
-.new-conversation-fields select:focus {
-    outline: none;
-    border-color: #ffb6c1; /* Light pink border on focus */
-    background-color: #fff;
-}
-
-.submit-button {
-    display: block;
-    width: 100%;
-    background-color: #ff5c5c; /* Theme color */
-    color: #fff;
-    border: none;
-    border-radius: 10px;
-    padding: 0.75rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-    text-align: center;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.submit-button:hover {
-    background-color: #ff4444; /* Darker shade on hover */
-    transform: translateY(-2px);
-}
-
-/* Error Message Styling */
-.new-conversation-form .shadow-lg {
-    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
-}
-
-/* Animations for Form Fields */
-.new-conversation-fields input,
-.new-conversation-fields textarea,
-.new-conversation-fields select {
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-
-</style>
 <h1 class="mb-6 text-3xl">New Conversation</h1>
-
 <form method="post" action="." class="new-conversation-form">
     {% csrf_token %}
-
     <div class="new-conversation-fields space-y-4">
         {{ form.as_p }}
     </div>
-
     {% if form.errors or form.non_field_errors %}
         <div class="mb-3 p-6 bg-red-100 rounded-xl shadow-lg">
             {% for field in form %}
                 {{ field.errors }}
             {% endfor %}
-
             {{ form.non_field_errors }}
         </div>
     {% endif %}
-
     <button class="submit-button mt-6 py-4 px-8 text-lg">Send</button>
 </form>
 {% endblock %}

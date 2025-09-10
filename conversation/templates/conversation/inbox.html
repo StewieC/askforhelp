@@ -3,68 +3,7 @@
 {% block title %}Inbox{% endblock %}
 
 {% block content %}
-<style>
-    .inbox-container {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
-.conversation-link {
-    text-decoration: none;
-}
-
-.conversation-card {
-    background-color: #ffe4e1; /* Light pink */
-    padding: 1rem;
-    border-radius: 15px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.conversation-card:hover {
-    transform: scale(1.02);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-}
-
-.conversation-info {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-}
-
-.conversation-member {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #333;
-}
-
-.conversation-last-updated {
-    font-size: 0.8rem;
-    color: #888;
-    margin-bottom: 0.5rem;
-}
-
-.conversation-snippet {
-    font-size: 1rem;
-    color: #555;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-}
-
-/* Animation for hover effect */
-.conversation-card:hover .conversation-member {
-    color: #ff5c5c;
-    transition: color 0.2s ease;
-}
-
-</style>
 <h1 class="mb-6 text-3xl">Inbox</h1>
-
 <div class="inbox-container">
     {% for conversation in conversations %}
         <a href="{% url 'conversation:detail' conversation.id %}" class="conversation-link">
@@ -74,7 +13,7 @@
                         {% if member != request.user %}
                             <p class="mb-1 conversation-member"><strong>{{ member.username }}</strong></p>
                             <p class="conversation-last-updated">{{ conversation.modified_at }}</p>
-                            <p class="conversation-snippet">{{ conversation.article.name }}</p>
+                            <p class="conversation-snippet">{{ conversation.article.title }}</p>
                         {% endif %}
                     {% endfor %}
                 </div>
