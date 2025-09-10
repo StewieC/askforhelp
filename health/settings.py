@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ.get("DEBUG", "False").lower() == "true"
+DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -95,8 +95,8 @@ DATABASES = {
 }
 
 # DATABASE_URL = postgresqlel://ask4hp_django_render_user:BkUI3H8wmuOY1WUKuQhq8VdDzLYJKwp0@dpg-csl13p56l47c73brag20-a/ask4help_django_render
-database_url = os.environ.get("DATABASE_URL")
-DATABASES["default"] = dj_database_url.parse(database_url)
+# database_url = os.environ.get("DATABASE_URL")
+# DATABASES["default"] = dj_database_url.parse(database_url)
 
 
 # postgresql://ask4help_django_render_user:BkUI3H8wmuOY1WUKuQhq8VdDzLYJKwp0@dpg-csl13p56l47c73brag20-a.singapore-postgres.render.com/ask4help_django_render
@@ -139,9 +139,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
-django_heroku.settings(locals())
+STATIC_ROOT = (BASE_DIR, 'static')
+STATICFILES_DIRS = ('static')
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
