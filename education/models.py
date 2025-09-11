@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from contacts.models import EmergencyContact
 
 class Article(models.Model):
     title = models.CharField(max_length=200)
@@ -12,6 +13,7 @@ class Article(models.Model):
         ('bleeding', 'Bleeding Control'),
         ('other', 'Other Medical Procedures'),
     ], default='other')
+    related_contacts = models.ManyToManyField(EmergencyContact, blank=True, related_name='related_articles')
 
     def __str__(self):
         return self.title

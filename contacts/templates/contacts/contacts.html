@@ -1,27 +1,63 @@
 {% extends 'education/base.html' %}
+{% load static %}
 
 {% block title %}Emergency Contacts{% endblock %}
 
 {% block content %}
 <div class="search-bar">
     <form method="get" action="{% url 'contacts:search_contacts' %}">
-        <input type="text" name="location" placeholder="Search by location">
+        <input type="text" name="location" placeholder="Search by location" value="{{ query|default:'' }}">
+        <select name="category">
+            <option value="">All Categories</option>
+            {% for category, display in categories %}
+                <option value="{{ category }}" {% if category == selected_category %}selected{% endif %}>{{ display }}</option>
+            {% endfor %}
+        </select>
         <button type="submit">Search</button>
     </form>
 </div>
-<h1>Emergency Contacts {% if location %} in {{ location }} {% else %} (All Locations) {% endif %}</h1>
+
+<h1>Emergency Contacts {% if location %}in {{ location }}{% endif %} {% if category %}({{ category|title }}){% else %}(All Categories){% endif %}</h1>
+
+{% if request.user.is_superuser %}
+    <a href="{% url 'contacts:add_contact' %}" class="btn">Add New Contact</a>
+{% endif %}
+
 <div class="contacts-container">
-    {% for contact in contacts %}
+    {% for contact in page_obj %}
         <div class="contact-card">
             <h2>{{ contact.name }}</h2>
-            <p>Phone: {{ contact.phone_number }}</p>
+            <p>Phone: <a href="tel:{{ contact.phone_number }}">{{ contact.phone_number }}</a></p>
             <p class="location">Location: {{ contact.location }}</p>
+            <p>Category: {{ contact.get_category_display }}</p>
+            {% if contact.description %}
+                <p>{{ contact.description }}</p>
+            {% endif %}
+            {% if contact.address %}
+                <p>Address: {{ contact.address }}</p>
+            {% endif %}
+            {% if request.user.is_superuser %}
+                <a href="{% url 'contacts:edit_contact' contact.pk %}" class="btn">Edit</a>
+                <a href="{% url 'contacts:delete_contact' contact.pk %}" class="btn">Delete</a>
+            {% endif %}
         </div>
     {% empty %}
         <div class="contact-card">
             <h2>No Emergency Contacts Available</h2>
-            <p>No contacts are available for this location.</p>
+            <p>No contacts are available for this location or category.</p>
         </div>
     {% endfor %}
 </div>
+
+{% if page_obj.has_previous or page_obj.has_next %}
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}{% if location %}&location={{ location }}{% endif %}{% if category %}&category={{ category }}{% endif %}" class="btn">Previous</a>
+        {% endif %}
+        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}{% if location %}&location={{ location }}{% endif %}{% if category %}&category={{ category }}{% endif %}" class="btn">Next</a>
+        {% endif %}
+    </div>
+{% endif %}
 {% endblock %}

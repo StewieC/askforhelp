@@ -927,3 +927,45 @@ h1 {
     background-color: #ff99cc;
     transform: scale(1.05);
 }
+
+/* Add to existing styles.css */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.pagination .btn {
+    background-color: #fff;
+    color: #ff66b3;
+    padding: 8px 16px;
+    border: 2px solid #ff66b3;
+    border-radius: 20px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.pagination .btn:hover {
+    background-color: #ff66b3;
+    color: #fff;
+}
+
+.pagination span {
+    font-size: 16px;
+    color: #333;
+}
+
+/* Existing styles (unchanged, included for context) */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&family=Poppins:wght@300;400;500&display=swap');
+
+body {
+    background-color: #ffe6f0;
+    font-family: 'Nunito', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* ... rest of the styles from previous update ... */

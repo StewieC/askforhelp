@@ -12,7 +12,8 @@ def index(request):
 
 def article_detail(request, id):
     article = get_object_or_404(Article, pk=id)
-    return render(request, 'education/article_detail.html', {'article': article})
+    related_contacts = article.related_contacts.filter(is_verified=True)
+    return render(request, 'education/article_detail.html', {'article': article, 'related_contacts': related_contacts})
 
 @login_required
 def new(request):

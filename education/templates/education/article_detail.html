@@ -1,4 +1,5 @@
 {% extends 'education/base.html' %}
+{% load static %}
 
 {% block title %}{{ article.title }}{% endblock %}
 
@@ -9,7 +10,24 @@
 <div class="article-detail">
     <h2>{{ article.title }}</h2>
     <p class="meta-info">By {{ article.author }} | {{ article.created_at|date:"F d, Y" }}</p>
+    <p>Category: {{ article.get_category_display }}</p>
     <p>{{ article.content }}</p>
+    {% if related_contacts %}
+        <h3>Related Emergency Contacts</h3>
+        <div class="contacts-container">
+            {% for contact in related_contacts %}
+                <div class="contact-card">
+                    <h3>{{ contact.name }}</h3>
+                    <p><a href="tel:{{ contact.phone_number }}">{{ contact.phone_number }}</a></p>
+                    <p>Location: {{ contact.location }}</p>
+                    <p>Category: {{ contact.get_category_display }}</p>
+                    {% if contact.description %}
+                        <p>{{ contact.description }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
     <a href="{% url 'education:index' %}" class="back-link">← Back to Articles</a>
     <div>
         <a href="{% url 'conversation:new' article.id %}" class="back-link">Contact writer -></a>
