@@ -4,13 +4,15 @@
 {% block title %}Delete Emergency Contact{% endblock %}
 
 {% block content %}
-<div class="form-container">
-    <h1 class="form-title">Delete Emergency Contact: {{ contact.name }}</h1>
-    <p>Are you sure you want to delete "{{ contact.name }}" from {{ contact.location }}?</p>
+<div class="form-container text-center">
+    <h1 class="form-title">Delete: {{ contact.name }}</h1>
+    <p>Are you sure you want to permanently delete the contact for "{{ contact.name }}" from {{ contact.location }}?</p>
     <form method="post" action=".">
         {% csrf_token %}
-        <button type="submit" class="submit-btn">Confirm Delete</button>
-        <a href="{% url 'contacts:emergency_contacts' %}" class="btn">Cancel</a>
+        <div style="display: flex; gap: 1rem; justify-content: center; margin-top: 2rem;">
+            <a href="{% url 'contacts:emergency_contacts' %}" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-danger">Confirm Delete</button>
+        </div>
     </form>
 </div>
 {% endblock %}

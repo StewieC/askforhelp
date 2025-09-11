@@ -3,108 +3,73 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {%load static%}
+    {% load static %}
     <title>{% block title %}{% endblock %} | Ask4Help</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-    <div class="navbar">
-        <a href="/" class="brand">Ask4Help</a>
+    <nav class="navbar">
+        <a href="{% url 'education:index' %}" class="brand">Ask4Help</a>
         <div class="nav-buttons">
             {% if request.user.is_authenticated %}
-                <a href="{% url 'education:new' %}" class="btn">New Article</a>
-                <a href="{% url 'contacts:emergency_contacts' %}" class="btn">Emergency Contacts</a>
-                <a href="{% url 'education:faq' %}" class="btn">FAQs</a>
-                <a href="{% url 'loginSystem:logout' %}" class="btn">Logout</a>
+                <a href="{% url 'conversation:inbox' %}" class="btn btn-secondary">Inbox</a>
+                <a href="{% url 'education:new' %}" class="btn btn-primary">New Article</a>
+                <a href="{% url 'contacts:emergency_contacts' %}" class="btn btn-secondary">Emergency Contacts</a>
+                <a href="{% url 'education:faq' %}" class="btn btn-secondary">FAQs</a>
+                <a href="{% url 'loginSystem:logout' %}" class="btn btn-danger">Logout</a>
             {% else %}
-                <a href="{% url 'loginSystem:login' %}" class="btn">Login</a>
-                <a href="{% url 'loginSystem:signup' %}" class="btn">Sign Up</a>
-                <a href="{% url 'education:faq' %}" class="btn">FAQs</a>
+                <a href="{% url 'education:faq' %}" class="btn btn-secondary">FAQs</a>
+                <a href="{% url 'loginSystem:login' %}" class="btn btn-secondary">Login</a>
+                <a href="{% url 'loginSystem:signup' %}" class="btn btn-primary">Sign Up</a>
             {% endif %}
         </div>
-    </div>
-    <div>
+    </nav>
+
+    <main class="container">
         {% block content %}
         {% endblock %}
-    </div>
-    <div>
-        <button class="chat-button" onclick="toggleChat()">💬</button>
-        <div class="chat-popup" id="chat-popup">
-            <div class="chat-header">Chat with Us</div>
-            <div class="chat-messages" id="chat-messages"></div>
-            <div class="chat-input-area">
-                <input type="text" class="chat-input" id="chat-input" placeholder="Type your message...">
-                <button class="send-button" onclick="sendMessage()">Send</button>
-            </div>
-        </div>
-    </div>
+    </main>
+
     <footer class="footer">
         <div class="footer-container">
-            <div class="footer-row">
-                <div class="footer-col">
-                    <h3 class="footer-title">Ask4Help</h3>
-                    <p class="footer-desc">Your go-to resource for first aid and emergency contact info, available when you need it the most.</p>
-                </div>
-                <div class="footer-col">
-                    <h4 class="footer-heading">Quick Links</h4>
-                    <ul class="footer-links">
-                        <li><a href="{% url 'education:index' %}">Home</a></li>
-                        <li><a href="{% url 'education:new' %}">Post an Article</a></li>
-                        <li><a href="{% url 'contacts:emergency_contacts' %}">Emergency Contacts</a></li>
-                        <li><a href="{% url 'loginSystem:login' %}">Login</a></li>
-                        <li><a href="{% url 'loginSystem:signup' %}">Sign Up</a></li>
-                        <li><a href="{% url 'conversation:inbox' %}">Inbox</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4 class="footer-heading">Contact Us</h4>
-                    <ul class="footer-links">
-                        <li>Email: support@ask4help.com</li>
-                        <li>Phone: +123 456 7890</li>
-                        <li>Location: 123 Health St., Nyeri</li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h4 class="footer-heading">Follow Us</h4>
-                    <div class="social-icons">
-                        <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
+            <div class="footer-col">
+                <h4>Ask4Help</h4>
+                <p>Your reliable resource for first aid education and emergency information.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="{% url 'education:index' %}">Home</a></li>
+                    <li><a href="{% url 'contacts:emergency_contacts' %}">Emergency Contacts</a></li>
+                    <li><a href="{% url 'education:faq' %}">FAQs</a></li>
+                    <li><a href="{% url 'conversation:inbox' %}">Inbox</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Us</h4>
+                <ul class="footer-links">
+                    <li><i class="fas fa-envelope"></i> support@ask4help.com</li>
+                    <li><i class="fas fa-phone"></i> +254 700 123 456</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Health St, Nyeri, Kenya</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Follow Us</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Facebook</a></li>
+                    <li><a href="#">Twitter</a></li>
+                    <li><a href="#">Instagram</a></li>
+                </ul>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 Ask4Help. All Rights Reserved.</p>
+            <p>&copy; {% now "Y" %} Ask4Help. All Rights Reserved.</p>
         </div>
     </footer>
-    <script>
-        function toggleChat() {
-            const chatPopup = document.getElementById('chat-popup');
-            chatPopup.style.display = chatPopup.style.display === 'flex' ? 'none' : 'flex';
-        }
-
-        function sendMessage() {
-            const inputField = document.getElementById('chat-input');
-            const message = inputField.value;
-            if (message) {
-                const messageContainer = document.getElementById('chat-messages');
-                const userMessage = document.createElement('div');
-                userMessage.className = 'chat-message user';
-                userMessage.textContent = message;
-                messageContainer.appendChild(userMessage);
-                inputField.value = '';
-                setTimeout(() => {
-                    const aiMessage = document.createElement('div');
-                    aiMessage.className = 'chat-message';
-                    aiMessage.textContent = 'AI Response: ' + message;
-                    messageContainer.appendChild(aiMessage);
-                    messageContainer.scrollTop = messageContainer.scrollHeight;
-                }, 1000);
-            }
-        }
-    </script>
 </body>
 </html>

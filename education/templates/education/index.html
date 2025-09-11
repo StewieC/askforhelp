@@ -1,22 +1,30 @@
 {% extends 'education/base.html' %}
+{% load static %}
 
 {% block title %}Welcome{% endblock %}
 
 {% block content %}
-<div>
-    <form method="GET" action="{% url 'education:search' %}" class="search-bar-form">
-        <input type="text" name="query" placeholder="Search articles..." class="search-input">
-        <button type="submit" class="search-button">Search</button>
+<div class="search-filter-bar">
+    <form method="GET" action="{% url 'education:search' %}">
+        <input type="text" name="query" placeholder="Search for articles on burns, fractures, etc..." class="search-input">
+        <button type="submit" class="btn btn-primary">Search</button>
     </form>
 </div>
-<div class="article-container">
+
+<div class="card-grid">
     {% for article in articles %}
         <div class="article-card">
-            <h2>{{ article.title }}</h2>
-            <p>By {{ article.author }} | {{ article.created_at|date:"F d, Y" }}</p>
-            <p>{{ article.content|truncatewords:20 }}</p>
-            <a href="{% url 'education:article_detail' article.id %}" class="read-more">Read More</a>
+            <div>
+                <h3>{{ article.title }}</h3>
+                <p class="meta-info">By {{ article.author }} | {{ article.created_at|date:"F d, Y" }}</p>
+                <p>{{ article.content|truncatewords:20 }}</p>
+            </div>
+            <div class="card-actions">
+                <a href="{% url 'education:article_detail' article.id %}" class="btn btn-primary">Read More</a>
+            </div>
         </div>
+    {% empty %}
+        <p class="no-results">No articles have been posted yet.</p>
     {% endfor %}
 </div>
 {% endblock %}

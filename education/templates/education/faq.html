@@ -1,21 +1,24 @@
 {% extends 'education/base.html' %}
 
-{% block title %}{{ title }}{% endblock %}
+{% block title %}FAQs{% endblock %}
 
 {% block content %}
-<h1>Frequently Asked Questions</h1>
+<div class="page-header">
+    <h1>Frequently Asked Questions</h1>
+</div>
+
 <div class="faq-section">
     <div class="faq-item">
         <h3>What is the purpose of this app?</h3>
-        <p>This application aims to provide first aid education, including emergency contacts and resources for handling various emergency scenarios.</p>
+        <p>This application aims to provide accessible first aid education, connect users with medical writers, and offer a quick way to find categorized emergency contacts for various situations.</p>
     </div>
     <div class="faq-item">
         <h3>How do I find emergency contacts?</h3>
-        <p>Emergency contacts can be searched based on location, and they are categorized in the emergency contacts section of the app.</p>
+        <p>Navigate to the "Emergency Contacts" page. You can then search for contacts by location or filter by categories like "Hospitals," "Ambulance," or "Poison Control."</p>
     </div>
     <div class="faq-item">
         <h3>Can I contribute articles?</h3>
-        <p>Yes, users can contribute first aid articles by submitting them in the 'New Article' section. Admin approval may be required before publishing.</p>
+        <p>Yes, authenticated users can write and submit articles via the "New Article" button. These articles help enrich our community knowledge base on first aid and safety.</p>
     </div>
 </div>
 {% endblock %}

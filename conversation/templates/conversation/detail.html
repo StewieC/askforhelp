@@ -3,20 +3,35 @@
 {% block title %}Conversation{% endblock %}
 
 {% block content %}
-<h1 class="mb-6">Conversation</h1>
-<div class="space-y-6">
-    {% for message in conversation.messages.all %}
-        <div class="message-container {% if message.created_by == request.user %}sent{% else %}received{% endif %}">
-            <div class="message-bubble">
-                <p class="meta-info"><strong>{{ message.created_by.username }}</strong> @ {{ message.created_at }}</p>
-                <p>{{ message.content }}</p>
+{% with other_user=conversation.members.all|cut:request.user|first %}
+    <h1>Conversation with {{ other_user.username }}</h1>
+    <p class="meta-info">Regarding article: <a href="{% url 'education:article_detail' conversation.article.id %}">{{ conversation.article.title }}</a></p>
+{% endwith %}
+
+<div class="chat-panel" style="height: 60vh;">
+    <div class="messages-display" id="messages-display">
+        {% for message in conversation.messages.all %}
+            <div class="message-container {% if message.created_by == request.user %}sent{% else %}received{% endif %}">
+                <div class="message-bubble">
+                    <p class="meta-info">
+                        <strong>{{ message.created_by.username }}</strong> | {{ message.created_at|timesince }} ago
+                    </p>
+                    <p>{{ message.content }}</p>
+                </div>
             </div>
-        </div>
-    {% endfor %}
+        {% endfor %}
+    </div>
+
+    <form method="post" action="." class="message-form">
+        {% csrf_token %}
+        <textarea name="content" rows="2" placeholder="Type your message..."></textarea>
+        <button type="submit" class="btn btn-primary">Send</button>
+    </form>
 </div>
-<form method="post" action="." class="message-form">
-    {% csrf_token %}
-    <textarea name="content" rows="2" placeholder="Type your message..."></textarea>
-    <button type="submit" class="send-button">Send</button>
-</form>
+
+<script>
+    // Scroll to the bottom of the chat on page load
+    const messagesDisplay = document.getElementById('messages-display');
+    messagesDisplay.scrollTop = messagesDisplay.scrollHeight;
+</script>
 {% endblock %}

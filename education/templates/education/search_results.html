@@ -3,21 +3,26 @@
 {% block title %}Search Results{% endblock %}
 
 {% block content %}
-<h1>Search Results for "{{ query }}"</h1>
-<div class="card-container">
-    {% if results %}
-        {% for article in results %}
-            <div class="card">
-                <a href="{% url 'education:article_detail' article.id %}">
-                    <div class="card-content">
-                        <h2 class="card-title">{{ article.title }}</h2>
-                        <p class="card-author">by {{ article.author.username }}</p>
-                    </div>
-                </a>
+<div class="page-header">
+    <h1>Search Results for "{{ query }}"</h1>
+</div>
+
+<div class="card-grid">
+    {% for article in results %}
+        <div class="article-card">
+            <div>
+                <h3>{{ article.title }}</h3>
+                <p class="meta-info">by {{ article.author.username }}</p>
             </div>
-        {% endfor %}
-    {% else %}
-        <p class="no-results">No articles found matching your search criteria.</p>
-    {% endif %}
+            <div class="card-actions">
+                 <a href="{% url 'education:article_detail' article.id %}" class="btn btn-primary">Read More</a>
+            </div>
+        </div>
+    {% empty %}
+        <div class="no-results">
+            <h2>No articles found</h2>
+            <p>We couldn't find any articles matching your search for "{{ query }}".</p>
+        </div>
+    {% endfor %}
 </div>
 {% endblock %}

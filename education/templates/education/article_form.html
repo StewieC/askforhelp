@@ -7,9 +7,9 @@
     <h1 class="form-title">{{ title }}</h1>
     <form method="post" action="." enctype="multipart/form-data" class="styled-form">
         {% csrf_token %}
-        <div class="form-fields">
-            {{ form.as_p }}
-        </div>
+        
+        {{ form.as_p }}
+        
         {% if form.errors or form.non_field_errors %}
             <div class="error-messages">
                 {% for field in form %}
@@ -18,7 +18,8 @@
                 {{ form.non_field_errors }}
             </div>
         {% endif %}
-        <button type="submit" class="submit-btn">Submit</button>
+        
+        <button type="submit" class="submit-btn">Submit Article</button>
     </form>
 </div>
 {% endblock %}

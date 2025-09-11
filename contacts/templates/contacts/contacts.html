@@ -4,47 +4,52 @@
 {% block title %}Emergency Contacts{% endblock %}
 
 {% block content %}
-<div class="search-bar">
+<div class="page-header">
+    <h1>Emergency Contacts</h1>
+    {% if request.user.is_superuser %}
+        <a href="{% url 'contacts:add_contact' %}" class="btn btn-primary"><i class="fas fa-plus"></i> Add New Contact</a>
+    {% endif %}
+</div>
+
+<div class="search-filter-bar">
     <form method="get" action="{% url 'contacts:search_contacts' %}">
-        <input type="text" name="location" placeholder="Search by location" value="{{ query|default:'' }}">
+        <input type="text" name="location" placeholder="Search by location (e.g., Nairobi)" value="{{ query|default:'' }}">
         <select name="category">
             <option value="">All Categories</option>
             {% for category, display in categories %}
                 <option value="{{ category }}" {% if category == selected_category %}selected{% endif %}>{{ display }}</option>
             {% endfor %}
         </select>
-        <button type="submit">Search</button>
+        <button type="submit" class="btn btn-primary">Search</button>
     </form>
 </div>
 
-<h1>Emergency Contacts {% if location %}in {{ location }}{% endif %} {% if category %}({{ category|title }}){% else %}(All Categories){% endif %}</h1>
-
-{% if request.user.is_superuser %}
-    <a href="{% url 'contacts:add_contact' %}" class="btn">Add New Contact</a>
-{% endif %}
-
-<div class="contacts-container">
+<div class="card-grid">
     {% for contact in page_obj %}
         <div class="contact-card">
-            <h2>{{ contact.name }}</h2>
-            <p>Phone: <a href="tel:{{ contact.phone_number }}">{{ contact.phone_number }}</a></p>
-            <p class="location">Location: {{ contact.location }}</p>
-            <p>Category: {{ contact.get_category_display }}</p>
-            {% if contact.description %}
-                <p>{{ contact.description }}</p>
-            {% endif %}
-            {% if contact.address %}
-                <p>Address: {{ contact.address }}</p>
-            {% endif %}
+            <div>
+                <h3>{{ contact.name }}</h3>
+                <p><i class="fas fa-phone"></i> <a href="tel:{{ contact.phone_number }}">{{ contact.phone_number }}</a></p>
+                <p><i class="fas fa-map-marker-alt"></i> Location: {{ contact.location }}</p>
+                <p><i class="fas fa-tag"></i> Category: {{ contact.get_category_display }}</p>
+                {% if contact.description %}
+                    <p>{{ contact.description }}</p>
+                {% endif %}
+                {% if contact.address %}
+                    <p><i class="fas fa-location-dot"></i> Address: {{ contact.address }}</p>
+                {% endif %}
+            </div>
             {% if request.user.is_superuser %}
-                <a href="{% url 'contacts:edit_contact' contact.pk %}" class="btn">Edit</a>
-                <a href="{% url 'contacts:delete_contact' contact.pk %}" class="btn">Delete</a>
+                <div class="card-actions">
+                    <a href="{% url 'contacts:edit_contact' contact.pk %}" class="btn btn-secondary">Edit</a>
+                    <a href="{% url 'contacts:delete_contact' contact.pk %}" class="btn btn-danger">Delete</a>
+                </div>
             {% endif %}
         </div>
     {% empty %}
-        <div class="contact-card">
-            <h2>No Emergency Contacts Available</h2>
-            <p>No contacts are available for this location or category.</p>
+        <div class="no-results">
+            <h2>No Emergency Contacts Found</h2>
+            <p>No contacts match your current search criteria.</p>
         </div>
     {% endfor %}
 </div>
@@ -52,11 +57,11 @@
 {% if page_obj.has_previous or page_obj.has_next %}
     <div class="pagination">
         {% if page_obj.has_previous %}
-            <a href="?page={{ page_obj.previous_page_number }}{% if location %}&location={{ location }}{% endif %}{% if category %}&category={{ category }}{% endif %}" class="btn">Previous</a>
+            <a href="?page={{ page_obj.previous_page_number }}{% if location %}&location={{ location }}{% endif %}{% if category %}&category={{ category }}{% endif %}" class="btn btn-secondary">Previous</a>
         {% endif %}
         <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
         {% if page_obj.has_next %}
-            <a href="?page={{ page_obj.next_page_number }}{% if location %}&location={{ location }}{% endif %}{% if category %}&category={{ category }}{% endif %}" class="btn">Next</a>
+            <a href="?page={{ page_obj.next_page_number }}{% if location %}&location={{ location }}{% endif %}{% if category %}&category={{ category }}{% endif %}" class="btn btn-secondary">Next</a>
         {% endif %}
     </div>
 {% endif %}

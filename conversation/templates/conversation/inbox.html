@@ -3,22 +3,27 @@
 {% block title %}Inbox{% endblock %}
 
 {% block content %}
-<h1 class="mb-6 text-3xl">Inbox</h1>
-<div class="inbox-container">
+<div class="page-header">
+    <h1>Inbox</h1>
+</div>
+
+<div class="inbox-panel" style="max-width: 800px; margin: auto;">
     {% for conversation in conversations %}
         <a href="{% url 'conversation:detail' conversation.id %}" class="conversation-link">
-            <div class="conversation-card">
-                <div class="conversation-info">
-                    {% for member in conversation.members.all %}
-                        {% if member != request.user %}
-                            <p class="mb-1 conversation-member"><strong>{{ member.username }}</strong></p>
-                            <p class="conversation-last-updated">{{ conversation.modified_at }}</p>
-                            <p class="conversation-snippet">{{ conversation.article.title }}</p>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            </div>
+            {% for member in conversation.members.all %}
+                {% if member != request.user %}
+                    <p class="conversation-member">
+                        <i class="fas fa-user"></i> {{ member.username }}
+                    </p>
+                    <p class="conversation-snippet">
+                        Regarding: {{ conversation.article.title }}
+                    </p>
+                    <p class="meta-info">Last update: {{ conversation.modified_at|timesince }} ago</p>
+                {% endif %}
+            {% endfor %}
         </a>
+    {% empty %}
+        <p style="padding: 1.5rem; text-align: center;">Your inbox is empty.</p>
     {% endfor %}
 </div>
 {% endblock %}

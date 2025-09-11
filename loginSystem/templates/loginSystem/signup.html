@@ -1,28 +1,20 @@
 {% extends 'education/base.html' %}
 
-{% block title %}Sign Up{% endblock %}
+{% block title %}{% if 'login' in request.path %}Login{% else %}Sign Up{% endif %}{% endblock %}
 
 {% block content %}
 <div class="auth-container">
-    <h1 class="auth-title">Sign Up</h1>
+    <h1 class="auth-title">{% if 'login' in request.path %}Login to Your Account{% else %}Create an Account{% endif %}</h1>
     <form method="post" action=".">
         {% csrf_token %}
-        <div class="form-group">
-            <label class="form-label">Username</label>
-            {{ form.username }}
-        </div>
-        <div class="form-group">
-            <label class="form-label">Email</label>
-            {{ form.email }}
-        </div>
-        <div class="form-group">
-            <label class="form-label">Password</label>
-            {{ form.password1 }}
-        </div>
-        <div class="form-group">
-            <label class="form-label">Repeat Password</label>
-            {{ form.password2 }}
-        </div>
+        
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+            </div>
+        {% endfor %}
+        
         {% if form.errors or form.non_field_errors %}
             <div class="error-messages">
                 {% for field in form %}
@@ -31,7 +23,8 @@
                 {{ form.non_field_errors }}
             </div>
         {% endif %}
-        <button type="submit" class="auth-btn">Submit</button>
+        
+        <button type="submit" class="auth-btn">{% if 'login' in request.path %}Login{% else %}Sign Up{% endif %}</button>
     </form>
 </div>
 {% endblock %}
